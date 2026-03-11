@@ -28,12 +28,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. After being struck, the object's CurrentAmplitude decays exponentially over time at a rate determined by its material's loss factor
   3. When CurrentAmplitude drops below the threshold, the EmitterTag is automatically disabled and the object is no longer processed as active
   4. Striking the same object again while it is still ringing re-excites it without causing errors or state corruption
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 01-01: TBD
-- [ ] 01-02: TBD
-- [ ] 01-03: TBD
+- [ ] 01-01-PLAN.md -- ECS systems and per-material threshold (component mods + 3 Burst-compiled systems)
+- [ ] 01-02-PLAN.md -- Input bridge and test scene (StrikeInputManager + steel/glass/wood scene)
+- [ ] 01-03-PLAN.md -- PlayMode integration tests (6 lifecycle tests)
 
 ### Phase 2: Sympathetic Propagation
 **Goal**: Striking one object causes nearby objects at matching natural frequencies to begin vibrating sympathetically -- the thesis headline feature
@@ -89,7 +89,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Single-Object ECS Pipeline | 0/3 | Not started | - |
+| 1. Single-Object ECS Pipeline | 0/3 | Planned | - |
 | 2. Sympathetic Propagation | 0/2 | Not started | - |
 | 3. Hybrid Bridge and Audio Synthesis | 0/3 | Not started | - |
 | 4. Polish and Validation | 0/3 | Not started | - |
