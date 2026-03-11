@@ -32,15 +32,19 @@ namespace SoundResonance
         /// (IEnableableComponent default behavior).
         /// </summary>
         [BurstCompile]
+        [WithOptions(EntityQueryOptions.IgnoreComponentEnabledState)]
         private partial struct ActivateJob : IJobEntity
         {
             private void Execute(
                 ref ResonantObjectData data,
                 ref EmitterTag emitter,
-                in StrikeEvent strike,
+                ref StrikeEvent strike,
                 EnabledRefRW<StrikeEvent> strikeEnabled,
                 EnabledRefRW<EmitterTag> emitterEnabled)
             {
+                // Only process entities where StrikeEvent is actually enabled
+                if (!strikeEnabled.ValueRO) return;
+
                 // Additive energy: multiple strikes accumulate amplitude
                 data.CurrentAmplitude += strike.NormalizedForce;
 
