@@ -64,11 +64,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| ECS-01 | Phase 1 | Pending |
-| ECS-02 | Phase 1 | Pending |
-| ECS-03 | Phase 1 | Pending |
+| ECS-01 | Phase 1 | Complete |
+| ECS-02 | Phase 1 | Complete |
+| ECS-03 | Phase 1 | Complete |
 | ECS-04 | Phase 2 | Pending |
-| INP-01 | Phase 1 | Pending |
+| INP-01 | Phase 1 | Complete |
 | AUD-01 | Phase 3 | Pending |
 | AUD-02 | Phase 3 | Pending |
 | TST-01 | Phase 4 | Pending |
@@ -83,4 +83,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-03-11*
-*Last updated: 2026-03-11 after roadmap creation*
+*Last updated: 2026-03-11 after Phase 1 completion*

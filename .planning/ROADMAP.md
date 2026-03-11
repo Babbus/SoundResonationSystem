@@ -12,7 +12,7 @@ This roadmap delivers a complete real-time sympathetic resonance simulation: fro
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Single-Object ECS Pipeline** - Strike, activate, decay, deactivate a single resonant object
+- [x] **Phase 1: Single-Object ECS Pipeline** - Strike, activate, decay, deactivate a single resonant object
 - [ ] **Phase 2: Sympathetic Propagation** - N-body frequency matching drives nearby objects sympathetically
 - [ ] **Phase 3: Hybrid Bridge and Audio Synthesis** - Thread-safe ECS-to-audio transfer and procedural sine output
 - [ ] **Phase 4: Polish and Validation** - Visual feedback, debug HUD, integration tests, performance validation
@@ -31,9 +31,9 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 3 plans
 
 Plans:
-- [ ] 01-01-PLAN.md -- ECS systems and per-material threshold (component mods + 3 Burst-compiled systems)
-- [ ] 01-02-PLAN.md -- Input bridge and test scene (StrikeInputManager + steel/glass/wood scene)
-- [ ] 01-03-PLAN.md -- PlayMode integration tests (6 lifecycle tests)
+- [x] 01-01-PLAN.md -- ECS systems and per-material threshold (component mods + 3 Burst-compiled systems)
+- [x] 01-02-PLAN.md -- Input bridge and test scene (StrikeInputManager + steel/glass/wood scene)
+- [x] 01-03-PLAN.md -- PlayMode integration tests (6 lifecycle tests)
 
 ### Phase 2: Sympathetic Propagation
 **Goal**: Striking one object causes nearby objects at matching natural frequencies to begin vibrating sympathetically -- the thesis headline feature
@@ -89,7 +89,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Single-Object ECS Pipeline | 0/3 | Planned | - |
+| 1. Single-Object ECS Pipeline | 3/3 | ✓ Complete | 2026-03-11 |
 | 2. Sympathetic Propagation | 0/2 | Not started | - |
 | 3. Hybrid Bridge and Audio Synthesis | 0/3 | Not started | - |
 | 4. Polish and Validation | 0/3 | Not started | - |

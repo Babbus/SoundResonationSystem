@@ -5,32 +5,32 @@
 See: .planning/PROJECT.md (updated 2026-03-11)
 
 **Core value:** Physically accurate resonance behavior that emerges from material properties and geometry
-**Current focus:** Phase 1 - Single-Object ECS Pipeline
+**Current focus:** Phase 1 complete — ready for Phase 2
 
 ## Current Position
 
-Phase: 1 of 4 (Single-Object ECS Pipeline)
-Plan: 2 of 3 in current phase (01-01, 01-03 complete)
-Status: In progress
-Last activity: 2026-03-11 -- Completed 01-03-PLAN.md (PlayMode integration tests)
+Phase: 1 of 4 (Single-Object ECS Pipeline) — COMPLETE
+Plan: 3 of 3 in phase (all complete)
+Status: Phase 1 verified and complete
+Last activity: 2026-03-11 -- Phase 1 verified (4/4 must-haves passed)
 
-Progress: [##........] 17% (2/12 plans)
+Progress: [###.......] 25% (3/12 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 2
-- Average duration: ~2.5 min
-- Total execution time: ~5 min
+- Total plans completed: 3
+- Average duration: ~3 min
+- Total execution time: ~9 min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01 | 2/3 | ~5 min | ~2.5 min |
+| 01 | 3/3 | ~9 min | ~3 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (~2 min), 01-03 (~3 min)
+- Last 5 plans: 01-01 (~2 min), 01-03 (~3 min), 01-02 (~4 min, included checkpoint)
 - Trend: stable
 
 *Updated after each plan completion*
@@ -47,6 +47,11 @@ Recent decisions affecting current work:
 - [01-01]: DeactivationThreshold assigned after Validate() in GetBlittableData() to prevent 0.0f default bug
 - [01-01]: ISystem + nested IJobEntity with ScheduleParallel established as standard pattern for all resonance systems
 - [01-01]: EnableableComponent query filtering verified working -- default filtering matches only enabled components
+- [01-02]: SubScene baking is REQUIRED for ECS components -- Bakers only run on objects inside SubScenes
+- [01-02]: Screen-space entity picking (Camera.WorldToScreenPoint) used instead of Physics.Raycast -- SubScene baking strips colliders
+- [01-02]: EntityQueryOptions.IgnoreComponentEnabledState REQUIRED when querying entities with disabled IEnableableComponents
+- [01-02]: Cannot have both `in T` and `EnabledRefRW<T>` for same component in IJobEntity -- causes aliasing error, use `ref T` instead
+- [01-02]: ActivateJob needs IgnoreComponentEnabledState + manual strikeEnabled check because EmitterTag starts disabled from Baker
 - [01-03]: Monotonic/relative assertion strategy for PlayMode physics tests -- never assert exact exponential values due to inconsistent DeltaTime
 - [01-03]: PlayMode ECS test infrastructure pattern established: CreateResonantEntity + Strike + SimulateFrames helpers
 
@@ -57,11 +62,13 @@ None yet.
 ### Blockers/Concerns
 
 - [RESOLVED] EnableableComponent query filter semantics verified in 01-01 implementation -- default filtering works as expected
+- [RESOLVED] SubScene baking requirement and collider stripping -- solved with screen-space picking in 01-02
+- [RESOLVED] IEnableableComponent aliasing between in/ref and EnabledRefRW -- use ref for both
 - [Research]: PropagationSystem job structure (ComponentLookup vs. two-pass) needs design decision before Phase 2
 - [Research]: Audio bridge threading contract needs pseudocode design before Phase 3
 
 ## Session Continuity
 
-Last session: 2026-03-11T16:42:00Z
-Stopped at: Completed 01-03-PLAN.md (PlayMode integration tests)
+Last session: 2026-03-11
+Stopped at: Phase 1 complete, ready for Phase 2
 Resume file: None
