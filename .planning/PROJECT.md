@@ -23,19 +23,23 @@ Physically accurate resonance behavior that **emerges from material properties a
 
 ### Active
 
-- [ ] ECS runtime systems: EmitterActivation, ResonancePropagation, EmitterDeactivation
+- [ ] ECS runtime systems: EmitterActivation, ResonancePropagation, EmitterDeactivation (Burst-compiled ISystem + IJobEntity)
 - [ ] Raycast-based strike input system (click to strike objects with configurable force)
-- [ ] Procedural audio synthesis via Unity AudioSource (OnAudioFilterRead sine wave generation)
-- [ ] Hybrid ECS-to-MonoBehaviour bridge for audio output
+- [ ] Sympathetic resonance: N-body frequency matching with distance/frequency culling
+- [ ] Hybrid bridge: NativeArray shared-buffer from ECS to audio thread (LateUpdate copy)
+- [ ] Procedural audio synthesis via OnAudioFilterRead (sine wave from amplitude/frequency)
+- [ ] Frame-rate independent simulation (ECS tracks envelope, audio thread maintains phase)
 - [ ] PlayMode integration tests for runtime simulation
 - [ ] Basic performance validation (entity count scaling)
-- [ ] Optional FMOD integration as alternative audio backend
 
 ### Out of Scope
 
+- FMOD integration — deferred to future milestone, Unity AudioSource sufficient for thesis
 - Artistic/designer-tunable parameters — all behavior must derive from material science
+- Full modal analysis (multi-mode vibration) — academic scope limited to fundamental frequency
+- DSPGraph — experimental/deprecated, OnAudioFilterRead is the stable path
 - Networked multiplayer resonance — single-player simulation only
-- Complex mesh-based modal analysis — using bounding box approximation is sufficient for thesis
+- VR/AR support — desktop thesis demo only
 - Mobile platform optimization — desktop-only target
 
 ## Context
@@ -46,6 +50,8 @@ Physically accurate resonance behavior that **emerges from material properties a
 - All physics math is Burst-compiled and frame-rate independent
 - Edit-time baking means expensive calculations happen once, not per-frame
 - Empty folders exist for planned work: Runtime/Systems/, Runtime/Audio/, Runtime/Hybrid/
+- Three execution contexts at runtime: ECS systems (~60Hz Burst), MonoBehaviour bridge (main thread LateUpdate), audio callback (~48kHz separate thread)
+- NativeArray shared-buffer is the load-bearing architectural pattern for ECS-to-audio data transfer
 
 ## Constraints
 
@@ -65,6 +71,11 @@ Physically accurate resonance behavior that **emerges from material properties a
 | IEnableableComponent for events | Zero-cost state transitions without structural chunk changes | ✓ Good |
 | Unity AudioSource first, FMOD later | Start simple, add professional audio backend as optional phase | — Pending |
 | Raycast click for strike input | Simple, deterministic input for thesis demonstration | — Pending |
+| ISystem over SystemBase | ISystem is Burst-compilable, SystemBase is not (Entities 1.3 docs) | — Pending |
+| OnAudioFilterRead for audio | DSPGraph deprecated, AudioClip.Create not real-time | — Pending |
+| NativeArray shared-buffer bridge | Single-writer/single-reader avoids locks between main and audio thread | — Pending |
+| Single AudioSource mixer | One AudioSource mixes all voices — avoids lifecycle complexity for thesis scale | — Pending |
+| Distance + frequency culling | Prevents quadratic N×N scaling in propagation system | — Pending |
 
 ---
-*Last updated: 2026-03-11 after initialization*
+*Last updated: 2026-03-11 after research and re-initialization*
