@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-03-11)
 ## Current Position
 
 Phase: 1 of 4 (Single-Object ECS Pipeline)
-Plan: 1 of 3 in current phase
+Plan: 2 of 3 in current phase (01-01, 01-03 complete)
 Status: In progress
-Last activity: 2026-03-11 -- Completed 01-01-PLAN.md (core ECS systems)
+Last activity: 2026-03-11 -- Completed 01-03-PLAN.md (PlayMode integration tests)
 
-Progress: [#.........] 8% (1/12 plans)
+Progress: [##........] 17% (2/12 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 1
-- Average duration: ~2 min
-- Total execution time: ~2 min
+- Total plans completed: 2
+- Average duration: ~2.5 min
+- Total execution time: ~5 min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01 | 1/3 | ~2 min | ~2 min |
+| 01 | 2/3 | ~5 min | ~2.5 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (~2 min)
-- Trend: -
+- Last 5 plans: 01-01 (~2 min), 01-03 (~3 min)
+- Trend: stable
 
 *Updated after each plan completion*
 
@@ -47,6 +47,8 @@ Recent decisions affecting current work:
 - [01-01]: DeactivationThreshold assigned after Validate() in GetBlittableData() to prevent 0.0f default bug
 - [01-01]: ISystem + nested IJobEntity with ScheduleParallel established as standard pattern for all resonance systems
 - [01-01]: EnableableComponent query filtering verified working -- default filtering matches only enabled components
+- [01-03]: Monotonic/relative assertion strategy for PlayMode physics tests -- never assert exact exponential values due to inconsistent DeltaTime
+- [01-03]: PlayMode ECS test infrastructure pattern established: CreateResonantEntity + Strike + SimulateFrames helpers
 
 ### Pending Todos
 
@@ -60,6 +62,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-11T16:34:25Z
-Stopped at: Completed 01-01-PLAN.md (core ECS systems)
+Last session: 2026-03-11T16:42:00Z
+Stopped at: Completed 01-03-PLAN.md (PlayMode integration tests)
 Resume file: None
