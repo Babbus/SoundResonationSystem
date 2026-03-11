@@ -64,23 +64,23 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| ECS-01 | — | Pending |
-| ECS-02 | — | Pending |
-| ECS-03 | — | Pending |
-| ECS-04 | — | Pending |
-| INP-01 | — | Pending |
-| AUD-01 | — | Pending |
-| AUD-02 | — | Pending |
-| TST-01 | — | Pending |
-| TST-02 | — | Pending |
-| POL-01 | — | Pending |
-| POL-02 | — | Pending |
+| ECS-01 | Phase 1 | Pending |
+| ECS-02 | Phase 1 | Pending |
+| ECS-03 | Phase 1 | Pending |
+| ECS-04 | Phase 2 | Pending |
+| INP-01 | Phase 1 | Pending |
+| AUD-01 | Phase 3 | Pending |
+| AUD-02 | Phase 3 | Pending |
+| TST-01 | Phase 4 | Pending |
+| TST-02 | Phase 4 | Pending |
+| POL-01 | Phase 4 | Pending |
+| POL-02 | Phase 4 | Pending |
 
 **Coverage:**
 - v1 requirements: 11 total
-- Mapped to phases: 0
-- Unmapped: 11 ⚠️
+- Mapped to phases: 11
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-11*
-*Last updated: 2026-03-11 after initial definition*
+*Last updated: 2026-03-11 after roadmap creation*
