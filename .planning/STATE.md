@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 03-01-PLAN.md
-last_updated: "2026-03-22T12:22:25Z"
-last_activity: 2026-03-22 -- Phase 3 plan 1 complete (ECS-to-audio bridge)
+stopped_at: Completed 03-02-PLAN.md
+last_updated: "2026-03-22T12:51:38Z"
+last_activity: 2026-03-22 -- Phase 3 complete (audio synthesis verified)
 progress:
   total_phases: 4
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 7
-  completed_plans: 6
-  percent: 86
+  completed_plans: 7
+  percent: 100
 ---
 
 # Project State
@@ -21,23 +21,23 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-11)
 
 **Core value:** Physically accurate resonance behavior that emerges from material properties and geometry
-**Current focus:** Phase 3 in progress -- hybrid bridge and audio synthesis
+**Current focus:** Phase 3 complete -- ready for Phase 4 (polish and validation)
 
 ## Current Position
 
-Phase: 3 of 4 (Hybrid Bridge and Audio Synthesis) -- IN PROGRESS
-Plan: 1 of 2 in phase (03-01 complete)
-Status: Executing Phase 3
-Last activity: 2026-03-22 -- Phase 3 plan 1 complete (ECS-to-audio bridge)
+Phase: 3 of 4 (Hybrid Bridge and Audio Synthesis) -- COMPLETE
+Plan: 2 of 2 in phase (03-02 complete)
+Status: Phase 3 Complete, Phase 4 Not Started
+Last activity: 2026-03-22 -- Phase 3 plan 2 complete (voice synthesizer + human verification)
 
-Progress: [█████████░] 86% (6/7 plans)
+Progress: [██████████] 100% (7/7 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 4
-- Average duration: ~3 min
-- Total execution time: ~11 min
+- Total plans completed: 7
+- Average duration: ~5 min
+- Total execution time: ~29 min
 
 **By Phase:**
 
@@ -45,13 +45,15 @@ Progress: [█████████░] 86% (6/7 plans)
 |-------|-------|-------|----------|
 | 01 | 3/3 | ~9 min | ~3 min |
 | 02 | 1/2 | ~2 min | ~2 min |
-| 03 | 1/2 | ~3 min | ~3 min |
+| 03 | 2/2 | ~18 min | ~9 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-03 (~3 min), 01-02 (~4 min, included checkpoint), 02-01 (~2 min), 03-01 (~3 min)
-- Trend: stable
+- Last 5 plans: 01-03 (~3 min), 01-02 (~4 min, included checkpoint), 02-01 (~2 min), 03-01 (~3 min), 03-02 (~15 min, included checkpoint)
+- Trend: stable (03-02 longer due to human verification loop)
 
 *Updated after each plan completion*
+
+| Phase 03 P02 | 15min | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -78,6 +80,10 @@ Recent decisions affecting current work:
 - [03-01]: int-keyed VoicePool (Entity.Index) instead of Entity-keyed -- enables EditMode testing without EntityManager
 - [03-01]: Lock-free double-buffer with volatile int readIndex -- no locks/mutexes needed for ECS-to-audio thread safety
 - [03-01]: IsNewStrike detection via frame-over-frame entity set comparison + StrikeAmplitude threshold
+- [03-02]: Cached AudioSettings.outputSampleRate in Initialize() for thread safety -- cannot call Unity API on audio thread
+- [03-02]: Energy model only adds energy (driving force cannot reduce amplitude) -- prevents sympathetic damping artifact
+- [03-02]: Re-strike detection via _lastStrikeAmplitude tracking per voice slot for sympathetic re-excitation
+- [03-02]: Added Damped field to ResonantObjectData for physical muting support
 
 ### Pending Todos
 
@@ -90,9 +96,10 @@ None yet.
 - [RESOLVED] IEnableableComponent aliasing between in/ref and EnabledRefRW -- use ref for both
 - [RESOLVED] PropagationSystem job structure: two-pass snapshot architecture chosen in 02-01 implementation
 - [RESOLVED] Audio bridge threading contract: lock-free double-buffer with volatile readIndex implemented in 03-01
+- [RESOLVED] Audio thread safety: cached sample rate at init time, verified no Unity API calls on audio thread in 03-02
 
 ## Session Continuity
 
-Last session: 2026-03-22T12:22:25Z
-Stopped at: Completed 03-01-PLAN.md
+Last session: 2026-03-22T12:51:38Z
+Stopped at: Completed 03-02-PLAN.md
 Resume file: None
