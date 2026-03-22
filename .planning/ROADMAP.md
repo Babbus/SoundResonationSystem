@@ -44,11 +44,11 @@ Plans:
   2. A nearby object tuned to a significantly different frequency does not respond to the struck emitter
   3. Sympathetic response attenuates with distance -- objects farther from the emitter receive less energy
   4. Multiple emitters active simultaneously each independently drive nearby receivers
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 02-01: TBD
-- [ ] 02-02: TBD
+- [ ] 02-01-PLAN.md -- SympatheticPropagationSystem + PlayMode tests (two-pass Burst system + 3 integration tests)
+- [ ] 02-02-PLAN.md -- Extended test scene with tuning fork pair demo + human verification
 
 ### Phase 3: Hybrid Bridge and Audio Synthesis
 **Goal**: The ECS simulation produces audible output -- strike an object and hear a sine tone at its natural frequency that decays in sync with the physics
