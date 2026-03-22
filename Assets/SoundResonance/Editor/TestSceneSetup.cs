@@ -20,6 +20,11 @@ namespace SoundResonance.Editor
     ///   - WoodBar: Smaller bar shape, fast decay (Q=100)
     ///
     /// These three materials provide clearly distinguishable decay rates for visual testing.
+    ///
+    /// Sympathetic Propagation Demo (Phase 2):
+    ///   - TuningForkA: Steel bar at x=3.0 (source)
+    ///   - TuningForkB: Steel bar at x=4.0 (same frequency, 1m away -- should vibrate sympathetically)
+    ///   - MismatchedControl: Wood_Oak bar at x=5.0 (different frequency -- should NOT vibrate)
     /// </summary>
     public static class TestSceneSetup
     {
@@ -87,6 +92,29 @@ namespace SoundResonance.Editor
                 scale: new Vector3(0.08f, 0.08f, 0.4f),
                 material: woodOak);
 
+            // --- Sympathetic Propagation Demo: Tuning Fork Pair + Control ---
+
+            // TuningForkA -- Steel bar, same shape as TuningForkB (same frequency)
+            CreateResonantObject(
+                name: "TuningForkA",
+                position: new Vector3(3.0f, 0.5f, 0f),
+                scale: new Vector3(0.1f, 0.1f, 0.5f),
+                material: steel);
+
+            // TuningForkB -- Steel bar, 1 meter from TuningForkA (same material = same frequency)
+            CreateResonantObject(
+                name: "TuningForkB",
+                position: new Vector3(4.0f, 0.5f, 0f),
+                scale: new Vector3(0.1f, 0.1f, 0.5f),
+                material: steel);
+
+            // MismatchedControl -- Wood_Oak bar, different material = different frequency
+            CreateResonantObject(
+                name: "MismatchedControl",
+                position: new Vector3(5.0f, 0.5f, 0f),
+                scale: new Vector3(0.08f, 0.08f, 0.4f),
+                material: woodOak);
+
             // Create a simple ground plane for visual reference
             var ground = GameObject.CreatePrimitive(PrimitiveType.Plane);
             ground.name = "Ground";
@@ -98,7 +126,8 @@ namespace SoundResonance.Editor
             AssetDatabase.Refresh();
 
             Debug.Log($"[Sound Resonance] Test scene created at {ScenePath} with 3 resonant objects " +
-                      "(SteelBar, GlassPlate, WoodBar) and StrikeInputManager.");
+                      "(SteelBar, GlassPlate, WoodBar) and sympathetic propagation demo " +
+                      "(TuningForkA, TuningForkB, MismatchedControl) with StrikeInputManager.");
         }
 
         /// <summary>
