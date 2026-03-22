@@ -13,7 +13,7 @@ This roadmap delivers a complete real-time sympathetic resonance simulation: fro
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Single-Object ECS Pipeline** - Strike, activate, decay, deactivate a single resonant object
-- [ ] **Phase 2: Sympathetic Propagation** - N-body frequency matching drives nearby objects sympathetically
+- [x] **Phase 2: Sympathetic Propagation** - N-body frequency matching drives nearby objects sympathetically
 - [ ] **Phase 3: Hybrid Bridge and Audio Synthesis** - Thread-safe ECS-to-audio transfer and procedural sine output
 - [ ] **Phase 4: Polish and Validation** - Visual feedback, debug HUD, integration tests, performance validation
 
@@ -59,12 +59,11 @@ Plans:
   2. The tone's volume decays in sync with the ECS CurrentAmplitude -- when the object deactivates, the tone stops
   3. Multiple struck objects produce simultaneous tones that mix additively without clicks or pops
   4. No audio artifacts (clicks, pops, dropouts) occur during normal operation including re-strikes
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 03-01: TBD
-- [ ] 03-02: TBD
-- [ ] 03-03: TBD
+- [ ] 03-01-PLAN.md -- Data contracts (VoiceData, HarmonicProfile), VoicePool, double-buffer ResonanceAudioBridge, EditMode tests
+- [ ] 03-02-PLAN.md -- VoiceSynthesizer (OnAudioFilterRead, 4-partial synthesis, strike transients, fades) + human audio verification
 
 ### Phase 4: Polish and Validation
 **Goal**: The thesis demonstration is visually informative, debuggable, and validated with automated tests and performance measurements
@@ -91,5 +90,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 |-------|----------------|--------|-----------|
 | 1. Single-Object ECS Pipeline | 3/3 | ✓ Complete | 2026-03-11 |
 | 2. Sympathetic Propagation | 2/2 | ✓ Complete | 2026-03-22 |
-| 3. Hybrid Bridge and Audio Synthesis | 0/3 | Not started | - |
+| 3. Hybrid Bridge and Audio Synthesis | 0/2 | In Progress | - |
 | 4. Polish and Validation | 0/3 | Not started | - |
