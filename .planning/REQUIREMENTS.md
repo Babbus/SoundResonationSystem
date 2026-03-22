@@ -12,7 +12,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [ ] **ECS-01**: Emitter activation system processes StrikeEvents, enables EmitterTag, and sets initial amplitude from strike force
 - [ ] **ECS-02**: Exponential decay system reduces CurrentAmplitude per-frame using material loss factor and Q-factor
 - [ ] **ECS-03**: Emitter deactivation system disables EmitterTag when CurrentAmplitude drops below configurable threshold
-- [ ] **ECS-04**: Sympathetic propagation system computes Lorentzian frequency response between emitter-receiver pairs with distance and frequency culling
+- [x] **ECS-04**: Sympathetic propagation system computes Lorentzian frequency response between emitter-receiver pairs with distance and frequency culling
 
 ### Input
 
@@ -67,7 +67,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | ECS-01 | Phase 1 | Complete |
 | ECS-02 | Phase 1 | Complete |
 | ECS-03 | Phase 1 | Complete |
-| ECS-04 | Phase 2 | Pending |
+| ECS-04 | Phase 2 | Complete |
 | INP-01 | Phase 1 | Complete |
 | AUD-01 | Phase 3 | Pending |
 | AUD-02 | Phase 3 | Pending |
