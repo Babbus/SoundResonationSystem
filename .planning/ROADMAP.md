@@ -47,8 +47,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 02-01-PLAN.md -- SympatheticPropagationSystem + PlayMode tests (two-pass Burst system + 3 integration tests)
-- [ ] 02-02-PLAN.md -- Extended test scene with tuning fork pair demo + human verification
+- [x] 02-01-PLAN.md -- SympatheticPropagationSystem + PlayMode tests (two-pass Burst system + 3 integration tests)
+- [x] 02-02-PLAN.md -- Extended test scene with tuning fork pair demo + human verification
 
 ### Phase 3: Hybrid Bridge and Audio Synthesis
 **Goal**: The ECS simulation produces audible output -- strike an object and hear a sine tone at its natural frequency that decays in sync with the physics
@@ -90,6 +90,6 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Single-Object ECS Pipeline | 3/3 | ✓ Complete | 2026-03-11 |
-| 2. Sympathetic Propagation | 1/2 | In Progress|  |
+| 2. Sympathetic Propagation | 2/2 | ✓ Complete | 2026-03-22 |
 | 3. Hybrid Bridge and Audio Synthesis | 0/3 | Not started | - |
 | 4. Polish and Validation | 0/3 | Not started | - |
