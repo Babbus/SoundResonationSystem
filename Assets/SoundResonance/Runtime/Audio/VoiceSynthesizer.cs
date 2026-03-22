@@ -41,6 +41,9 @@ namespace SoundResonance
         // Deterministic noise generator for strike transient
         private System.Random _rng;
 
+        // Cached sample rate (must be read on main thread, not audio thread)
+        private int _sampleRate;
+
         // Timing constants
         private const float AttackTime = 0.002f;   // 2ms ramp up
         private const float ReleaseTime = 0.075f;   // 75ms fade out
@@ -53,6 +56,7 @@ namespace SoundResonance
             _bridge = bridge;
             _voiceIndex = voiceIndex;
             _rng = new System.Random(voiceIndex);
+            _sampleRate = AudioSettings.outputSampleRate;
         }
 
         /// <summary>
@@ -69,7 +73,7 @@ namespace SoundResonance
 
             var voiceData = readBuffer[_voiceIndex];
 
-            int sampleRate = AudioSettings.outputSampleRate;
+            int sampleRate = _sampleRate;
             float increment = 2f * Mathf.PI / sampleRate;
 
             // Get harmonic ratios and weights for this voice's shape

@@ -42,6 +42,9 @@ namespace SoundResonance
         private HashSet<int> _previouslyActiveEntityIds;
         private HashSet<int> _currentlyActiveEntityIds;
 
+        // Track per-slot StrikeAmplitude to detect re-strikes on already-active entities
+        private float[] _lastStrikeAmplitude;
+
         /// <summary>
         /// Returns the buffer the audio thread should read from.
         /// Called from OnAudioFilterRead / audio thread.
@@ -61,6 +64,7 @@ namespace SoundResonance
             _voicePool = new VoicePool(MaxVoices);
             _previouslyActiveEntityIds = new HashSet<int>();
             _currentlyActiveEntityIds = new HashSet<int>();
+            _lastStrikeAmplitude = new float[MaxVoices];
 
             // Instantiate 16 pooled AudioSource children with VoiceSynthesizer
             _synthesizers = new VoiceSynthesizer[MaxVoices];
@@ -143,9 +147,15 @@ namespace SoundResonance
                 // Read EmitterTag to determine direct strike vs sympathetic
                 var emitterTag = em.GetComponentData<EmitterTag>(entities[i]);
 
+                // Detect re-strike: StrikeAmplitude increased on an already-active entity
+                float prevStrikeAmp = _lastStrikeAmplitude[slot];
+                bool isReStrike = !isNewThisFrame && emitterTag.StrikeAmplitude > prevStrikeAmp + 0.001f;
+                _lastStrikeAmplitude[slot] = emitterTag.StrikeAmplitude;
+
                 // If newly appearing with StrikeAmplitude > 0: direct strike
                 // If newly appearing with StrikeAmplitude ~ 0: sympathetic activation
-                bool isDirectStrike = isNewThisFrame && emitterTag.StrikeAmplitude > 0.001f;
+                // If already active but StrikeAmplitude jumped: re-strike
+                bool isDirectStrike = (isNewThisFrame && emitterTag.StrikeAmplitude > 0.001f) || isReStrike;
                 bool isSympathetic = isNewThisFrame && !isDirectStrike;
 
                 writeBuffer[slot] = new VoiceData
@@ -171,6 +181,7 @@ namespace SoundResonance
                     if (slot >= 0)
                     {
                         _voicePool.ReleaseVoice(slot);
+                        _lastStrikeAmplitude[slot] = 0f;
                     }
                 }
             }

@@ -127,6 +127,7 @@ namespace SoundResonance
                 EnabledRefRW<EmitterTag> emitterEnabled)
             {
                 if (EmitterCount == 0) return;
+                if (data.Damped) return;
 
                 float totalDrivingForce = 0f;
                 float3 receiverPos = transform.Position;
@@ -169,6 +170,10 @@ namespace SoundResonance
                     data.CurrentAmplitude, totalDrivingForce,
                     DeltaTime * PropagationTimeScale,
                     data.NaturalFrequency, data.QFactor);
+
+                // Only ADD energy — driving can never pull amplitude down.
+                // Once energy is absorbed, it belongs to the receiver and decays independently.
+                if (newAmplitude <= data.CurrentAmplitude) return;
 
                 data.CurrentAmplitude = newAmplitude;
 

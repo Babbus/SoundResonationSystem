@@ -48,5 +48,12 @@ namespace SoundResonance
         /// but the actual runtime value comes from baking.
         /// </summary>
         public float DeactivationThreshold;
+
+        /// <summary>
+        /// When true, this object is being physically damped (e.g. hand muting).
+        /// Sympathetic propagation will not drive this entity while damped.
+        /// Set by StrikeInputManager while right-click is held.
+        /// </summary>
+        public bool Damped;
     }
 }
