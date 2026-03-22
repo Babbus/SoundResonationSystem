@@ -35,6 +35,9 @@ namespace SoundResonance
 
         private VoicePool _voicePool;
 
+        // Pooled AudioSource GameObjects with VoiceSynthesizer components
+        private VoiceSynthesizer[] _synthesizers;
+
         // Track entity activation across frames for IsNewStrike detection
         private HashSet<int> _previouslyActiveEntityIds;
         private HashSet<int> _currentlyActiveEntityIds;
@@ -58,6 +61,27 @@ namespace SoundResonance
             _voicePool = new VoicePool(MaxVoices);
             _previouslyActiveEntityIds = new HashSet<int>();
             _currentlyActiveEntityIds = new HashSet<int>();
+
+            // Instantiate 16 pooled AudioSource children with VoiceSynthesizer
+            _synthesizers = new VoiceSynthesizer[MaxVoices];
+            for (int i = 0; i < MaxVoices; i++)
+            {
+                var voiceGO = new GameObject($"Voice_{i}");
+                voiceGO.transform.SetParent(transform);
+                var audioSource = voiceGO.AddComponent<AudioSource>();
+                audioSource.spatialBlend = 1f; // full 3D
+                audioSource.rolloffMode = AudioRolloffMode.Logarithmic;
+                audioSource.minDistance = 1f;
+                audioSource.maxDistance = 50f;
+                audioSource.dopplerLevel = 0f; // disable doppler for synthesis
+                audioSource.playOnAwake = false;
+                audioSource.loop = true; // keep callback firing
+                audioSource.clip = null; // no clip, we generate PCM
+                var synth = voiceGO.AddComponent<VoiceSynthesizer>();
+                synth.Initialize(this, i);
+                _synthesizers[i] = synth;
+                audioSource.Play(); // MUST call Play() for OnAudioFilterRead to fire
+            }
         }
 
         private void OnDestroy()
@@ -149,6 +173,13 @@ namespace SoundResonance
                         _voicePool.ReleaseVoice(slot);
                     }
                 }
+            }
+
+            // Sync AudioSource positions from the write buffer (before swap)
+            for (int i = 0; i < MaxVoices; i++)
+            {
+                if (writeBuffer[i].Active == 1)
+                    _synthesizers[i].transform.position = (Vector3)writeBuffer[i].Position;
             }
 
             // Atomic swap: audio thread will see new data on next read
