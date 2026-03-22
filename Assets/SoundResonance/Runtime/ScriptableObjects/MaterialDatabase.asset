@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b62ef8c38ea62340ba1b23e5657fef4, type: 3}
+  m_Name: MaterialDatabase
+  m_EditorClassIdentifier: SoundResonance.Runtime::SoundResonance.MaterialDatabase
+  materials:
+  - {fileID: 11400000, guid: e52366197aef36541a8085a4ccca1f20, type: 2}
+  - {fileID: 11400000, guid: 52ecdf8b185ef214b91c9a2f1f0aea21, type: 2}
+  - {fileID: 11400000, guid: e6f6582a1f682f0469aa1b4107d9a852, type: 2}
+  - {fileID: 11400000, guid: c36cb7c7288b4e54988edc428f1bac79, type: 2}
+  - {fileID: 11400000, guid: ec922239fb8a05b4286a276185860b72, type: 2}
+  - {fileID: 11400000, guid: dfbe8d1b5dcb85944bbfb17d0e6cae1d, type: 2}
+  - {fileID: 11400000, guid: d69d24b1f384816449014fe25670da78, type: 2}
+  - {fileID: 11400000, guid: 60c9554efb395cb4cb229f1666f69b46, type: 2}
+  - {fileID: 11400000, guid: 24464222c00171649919d336735e197b, type: 2}
+  - {fileID: 11400000, guid: 3a7d68a7bb7299c4cae5772b69a6fbce, type: 2}
