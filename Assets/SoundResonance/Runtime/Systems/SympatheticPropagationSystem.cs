@@ -100,12 +100,21 @@ namespace SoundResonance
             public float DeltaTime;
 
             /// <summary>
-            /// Visibility floor: minimum driving force applied to receivers within range
-            /// of a matched-frequency emitter. Ensures that sympathetic response is
-            /// immediately visible in the thesis demo rather than requiring many frames
-            /// of sub-threshold buildup. This is a demo convenience, not a physics parameter.
+            /// Minimum Lorentzian response to consider a frequency "matched" enough for
+            /// sympathetic coupling. Rejects fat-tail responses from mismatched frequencies.
+            /// At Q=100 (wood), response at octave separation ≈ 0.003 — well below this.
+            /// At Q=100 (wood), response within ~4Hz of natural ≈ 0.7 — well above this.
             /// </summary>
-            private const float VisibilityFloor = 0.001f;
+            private const float ResponseThreshold = 0.05f;
+
+            /// <summary>
+            /// Multiplier for the drive time constant during sympathetic coupling.
+            /// The physics-accurate tau for steel (Q=10000) at 440Hz is ~7.2 seconds,
+            /// which is too slow for a real-time demo. This scales the effective dt
+            /// so coupling builds up ~50x faster while preserving relative behavior
+            /// (closer/matched still beats farther/mismatched).
+            /// </summary>
+            private const float PropagationTimeScale = 50f;
 
             private void Execute(
                 ref ResonantObjectData data,
@@ -138,6 +147,9 @@ namespace SoundResonance
                     float response = ResonanceMath.LorentzianResponse(
                         emitter.NaturalFrequency, data.NaturalFrequency, data.QFactor);
 
+                    // Reject mismatched frequencies below threshold
+                    if (response < ResponseThreshold) continue;
+
                     // Inverse-square distance attenuation
                     float attenuation = ResonanceMath.InverseSquareAttenuation(dist);
 
@@ -147,12 +159,10 @@ namespace SoundResonance
 
                 if (totalDrivingForce <= 0f) return;
 
-                // Apply visibility floor after the > 0 check
-                totalDrivingForce = math.max(totalDrivingForce, VisibilityFloor);
-
-                // Driven oscillator step: smoothly approach target amplitude
+                // Driven oscillator step with scaled time for faster sympathetic coupling
                 float newAmplitude = ResonanceMath.DrivenOscillatorStep(
-                    data.CurrentAmplitude, totalDrivingForce, DeltaTime,
+                    data.CurrentAmplitude, totalDrivingForce,
+                    DeltaTime * PropagationTimeScale,
                     data.NaturalFrequency, data.QFactor);
 
                 data.CurrentAmplitude = newAmplitude;

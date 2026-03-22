@@ -1,5 +1,6 @@
 using Unity.Entities;
 using Unity.Mathematics;
+using Unity.Rendering;
 using UnityEngine;
 
 namespace SoundResonance
@@ -102,6 +103,12 @@ namespace SoundResonance
                 // Add StrikeEvent (disabled) — will be enabled by input system
                 AddComponent<StrikeEvent>(entity);
                 SetComponentEnabled<StrikeEvent>(entity, false);
+
+                // Add base color override for amplitude visualization
+                AddComponent(entity, new URPMaterialPropertyBaseColor
+                {
+                    Value = new float4(0.5f, 0.5f, 0.5f, 1f)
+                });
             }
         }
     }
