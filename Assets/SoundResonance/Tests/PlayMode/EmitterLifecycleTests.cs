@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
 using Unity.Entities;
+using Unity.Mathematics;
+using Unity.Transforms;
 using UnityEngine.TestTools;
 
 namespace SoundResonance.Tests
@@ -48,12 +50,27 @@ namespace SoundResonance.Tests
         }
 
         /// <summary>
-        /// Creates a resonant entity with the given material parameters.
+        /// Creates a resonant entity with the given material parameters at the origin.
+        /// EmitterTag and StrikeEvent are both added disabled.
+        /// LocalTransform is added at float3.zero so the entity is visible to
+        /// SympatheticPropagationSystem queries.
+        /// </summary>
+        private Entity CreateResonantEntity(
+            float naturalFrequency,
+            float qFactor,
+            float deactivationThreshold = 0.001f)
+        {
+            return CreateResonantEntity(naturalFrequency, qFactor, float3.zero, deactivationThreshold);
+        }
+
+        /// <summary>
+        /// Creates a resonant entity with the given material parameters at a specific position.
         /// EmitterTag and StrikeEvent are both added disabled.
         /// </summary>
         private Entity CreateResonantEntity(
             float naturalFrequency,
             float qFactor,
+            float3 position,
             float deactivationThreshold = 0.001f)
         {
             var entity = _entityManager.CreateEntity();
@@ -79,6 +96,8 @@ namespace SoundResonance.Tests
                 NormalizedForce = 0f
             });
             _entityManager.SetComponentEnabled<StrikeEvent>(entity, false);
+
+            _entityManager.AddComponentData(entity, LocalTransform.FromPosition(position));
 
             _testEntities.Add(entity);
             return entity;
