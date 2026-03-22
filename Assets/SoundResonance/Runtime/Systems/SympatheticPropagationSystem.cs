@@ -12,6 +12,7 @@ namespace SoundResonance
     /// </summary>
     public struct EmitterSnapshot
     {
+        public Entity Entity;
         public float3 Position;
         public float NaturalFrequency;
         public float CurrentAmplitude;
@@ -23,16 +24,16 @@ namespace SoundResonance
     /// Two-pass architecture:
     ///   Pass 1 (main thread): Collect snapshots of all active emitters (enabled EmitterTag).
     ///   Pass 2 (parallel job): For each entity (including those with disabled EmitterTag),
-    ///     skip active emitters (no cascade / no self-driving), accumulate driving force from
-    ///     all emitter snapshots using Lorentzian frequency response and inverse-square
-    ///     distance attenuation, then apply DrivenOscillatorStep to update amplitude.
+    ///     accumulate driving force from all emitter snapshots (except self) using Lorentzian
+    ///     frequency response and inverse-square distance attenuation, then apply
+    ///     DrivenOscillatorStep to update amplitude.
     ///
     /// Execution order: After EmitterActivationSystem (so strike amplitudes are set),
     /// before ExponentialDecaySystem (so sympathetic energy is added before decay).
     ///
-    /// Direct-only propagation: Active emitters are skipped in Pass 2 to prevent
-    /// cascade chains (emitter A drives receiver B, which becomes active and drives C).
-    /// Only directly struck emitters act as sources.
+    /// Self-driving prevention: Each entity skips its own snapshot in the emitter list.
+    /// Active emitters CAN receive energy from other emitters — this allows re-strikes
+    /// to continue driving sympathetically coupled objects.
     /// </summary>
     [BurstCompile]
     [UpdateInGroup(typeof(SimulationSystemGroup))]
@@ -56,6 +57,7 @@ namespace SoundResonance
             int emitterCount = _emitterQuery.CalculateEntityCount();
             if (emitterCount == 0) return;
 
+            var emitterEntities = _emitterQuery.ToEntityArray(Allocator.TempJob);
             var emitterData = _emitterQuery.ToComponentDataArray<ResonantObjectData>(Allocator.TempJob);
             var emitterTransforms = _emitterQuery.ToComponentDataArray<LocalTransform>(Allocator.TempJob);
 
@@ -64,6 +66,7 @@ namespace SoundResonance
             {
                 snapshots[i] = new EmitterSnapshot
                 {
+                    Entity = emitterEntities[i],
                     Position = emitterTransforms[i].Position,
                     NaturalFrequency = emitterData[i].NaturalFrequency,
                     CurrentAmplitude = emitterData[i].CurrentAmplitude
@@ -81,6 +84,7 @@ namespace SoundResonance
             }.ScheduleParallel(state.Dependency);
 
             // Chain disposal after job completion
+            emitterEntities.Dispose(state.Dependency);
             emitterData.Dispose(state.Dependency);
             emitterTransforms.Dispose(state.Dependency);
             snapshots.Dispose(state.Dependency);
@@ -89,7 +93,7 @@ namespace SoundResonance
         /// <summary>
         /// Parallel job that applies sympathetic driving force to each entity.
         /// Iterates ALL entities (IgnoreComponentEnabledState) so receivers with
-        /// disabled EmitterTag are included. Active emitters are skipped explicitly.
+        /// disabled EmitterTag are included. Only self-driving is prevented.
         /// </summary>
         [BurstCompile]
         [WithOptions(EntityQueryOptions.IgnoreComponentEnabledState)]
@@ -117,14 +121,12 @@ namespace SoundResonance
             private const float PropagationTimeScale = 50f;
 
             private void Execute(
+                Entity entity,
                 ref ResonantObjectData data,
                 in LocalTransform transform,
                 EnabledRefRW<EmitterTag> emitterEnabled)
             {
                 if (EmitterCount == 0) return;
-
-                // Skip active emitters: direct-only propagation, no cascade
-                if (emitterEnabled.ValueRO) return;
 
                 float totalDrivingForce = 0f;
                 float3 receiverPos = transform.Position;
@@ -132,6 +134,9 @@ namespace SoundResonance
                 for (int i = 0; i < EmitterCount; i++)
                 {
                     var emitter = Emitters[i];
+
+                    // Skip self-driving: an emitter cannot drive itself
+                    if (emitter.Entity == entity) continue;
 
                     // Frequency culling: skip emitters outside 2:1 ratio
                     float freqRatio = emitter.NaturalFrequency / data.NaturalFrequency;
