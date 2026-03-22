@@ -3,30 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 3 context gathered
-last_updated: "2026-03-22T11:56:13.322Z"
-last_activity: 2026-03-22 -- Phase 2 plan 1 complete (sympathetic propagation system)
+stopped_at: Completed 03-01-PLAN.md
+last_updated: "2026-03-22T12:22:25Z"
+last_activity: 2026-03-22 -- Phase 3 plan 1 complete (ECS-to-audio bridge)
 progress:
   total_phases: 4
   completed_phases: 2
-  total_plans: 5
-  completed_plans: 5
----
-
----
-gsd_state_version: 1.0
-milestone: v1.0
-milestone_name: milestone
-status: executing
-stopped_at: Completed 02-01-PLAN.md
-last_updated: "2026-03-22T10:46:53.422Z"
-last_activity: 2026-03-22 -- Phase 2 plan 1 complete (sympathetic propagation system)
-progress:
-  total_phases: 4
-  completed_phases: 1
-  total_plans: 5
-  completed_plans: 4
-  percent: 80
+  total_plans: 7
+  completed_plans: 6
+  percent: 86
 ---
 
 # Project State
@@ -36,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-11)
 
 **Core value:** Physically accurate resonance behavior that emerges from material properties and geometry
-**Current focus:** Phase 2 in progress -- sympathetic propagation
+**Current focus:** Phase 3 in progress -- hybrid bridge and audio synthesis
 
 ## Current Position
 
-Phase: 2 of 4 (Sympathetic Propagation) -- IN PROGRESS
-Plan: 1 of 2 in phase (02-01 complete)
-Status: Executing Phase 2
-Last activity: 2026-03-22 -- Phase 2 plan 1 complete (sympathetic propagation system)
+Phase: 3 of 4 (Hybrid Bridge and Audio Synthesis) -- IN PROGRESS
+Plan: 1 of 2 in phase (03-01 complete)
+Status: Executing Phase 3
+Last activity: 2026-03-22 -- Phase 3 plan 1 complete (ECS-to-audio bridge)
 
-Progress: [████████░░] 80% (4/5 plans)
+Progress: [█████████░] 86% (6/7 plans)
 
 ## Performance Metrics
 
@@ -60,9 +45,10 @@ Progress: [████████░░] 80% (4/5 plans)
 |-------|-------|-------|----------|
 | 01 | 3/3 | ~9 min | ~3 min |
 | 02 | 1/2 | ~2 min | ~2 min |
+| 03 | 1/2 | ~3 min | ~3 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (~2 min), 01-03 (~3 min), 01-02 (~4 min, included checkpoint), 02-01 (~2 min)
+- Last 5 plans: 01-03 (~3 min), 01-02 (~4 min, included checkpoint), 02-01 (~2 min), 03-01 (~3 min)
 - Trend: stable
 
 *Updated after each plan completion*
@@ -89,6 +75,9 @@ Recent decisions affecting current work:
 - [02-01]: Two-pass snapshot architecture chosen over ComponentLookup for Burst safety and parallel scheduling
 - [02-01]: Direct-only propagation: active emitters skip receiver processing to prevent cascade chains
 - [02-01]: Visibility floor (0.001f) for immediate thesis demo feedback, not a physics parameter
+- [03-01]: int-keyed VoicePool (Entity.Index) instead of Entity-keyed -- enables EditMode testing without EntityManager
+- [03-01]: Lock-free double-buffer with volatile int readIndex -- no locks/mutexes needed for ECS-to-audio thread safety
+- [03-01]: IsNewStrike detection via frame-over-frame entity set comparison + StrikeAmplitude threshold
 
 ### Pending Todos
 
@@ -100,10 +89,10 @@ None yet.
 - [RESOLVED] SubScene baking requirement and collider stripping -- solved with screen-space picking in 01-02
 - [RESOLVED] IEnableableComponent aliasing between in/ref and EnabledRefRW -- use ref for both
 - [RESOLVED] PropagationSystem job structure: two-pass snapshot architecture chosen in 02-01 implementation
-- [Research]: Audio bridge threading contract needs pseudocode design before Phase 3
+- [RESOLVED] Audio bridge threading contract: lock-free double-buffer with volatile readIndex implemented in 03-01
 
 ## Session Continuity
 
-Last session: 2026-03-22T11:56:13.318Z
-Stopped at: Phase 3 context gathered
-Resume file: .planning/phases/03-hybrid-bridge-and-audio-synthesis/03-CONTEXT.md
+Last session: 2026-03-22T12:22:25Z
+Stopped at: Completed 03-01-PLAN.md
+Resume file: None

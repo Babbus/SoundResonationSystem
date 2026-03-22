@@ -20,7 +20,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Audio
 
-- [ ] **AUD-01**: Hybrid bridge copies ECS amplitude/frequency data to NativeArray shared-buffer in LateUpdate for audio thread consumption
+- [x] **AUD-01**: Hybrid bridge copies ECS amplitude/frequency data to NativeArray shared-buffer in LateUpdate for audio thread consumption
 - [ ] **AUD-02**: OnAudioFilterRead generates sine waves from shared-buffer amplitude and frequency data at audio sample rate
 
 ### Testing
@@ -69,7 +69,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | ECS-03 | Phase 1 | Complete |
 | ECS-04 | Phase 2 | Complete |
 | INP-01 | Phase 1 | Complete |
-| AUD-01 | Phase 3 | Pending |
+| AUD-01 | Phase 3 | Complete |
 | AUD-02 | Phase 3 | Pending |
 | TST-01 | Phase 4 | Pending |
 | TST-02 | Phase 4 | Pending |
